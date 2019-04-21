@@ -1,7 +1,7 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const { schema } = require('./schema');
-const { resolvers } = require('./resolvers');
+const { schema } = require('./data/schema');
+
 
 const app = express();
 
@@ -9,12 +9,9 @@ app.get('/', (req, res) => {
   res.send('GraphQL is amazing!');
 });
 
-const root = resolvers;
-
 //Serve gql server with the supplied schema
 app.use('/graphql', graphqlHTTP({
   schema,
-  rootValue: root,
   graphiql: true,
 }));
 

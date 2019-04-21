@@ -1,6 +1,7 @@
-const { buildSchema } = require('graphql');
+const { resolvers } = require('./resolvers');
+const { makeExecutableSchema } = require('graphql-tools');
 
-exports.schema = buildSchema(`
+typeDefs = `
   type Friend {
     id: ID
     firstName: String
@@ -11,6 +12,14 @@ exports.schema = buildSchema(`
     email: String
     contacts: [Contact]
   }
+
+  type Alien {
+    id: ID
+    firstName: String
+    lastName: String
+    planet: String
+  }
+
   type Contact {
     firstName: String
     lastName: String
@@ -49,5 +58,8 @@ exports.schema = buildSchema(`
   type Mutation {
     createFriend(input: FriendInput): Friend
   }
-`)
+`;
+
+exports.schema = makeExecutableSchema({ typeDefs, resolvers })
+
 
