@@ -1,12 +1,20 @@
 const mongoose = require('mongoose');
-const { Friends } = require('./dbConnectors');
+const { Friends, Aliens } = require('./dbConnectors');
 
 //Resolver map
 exports.resolvers = { 
   Query: {
-    getFriend: ({ id }) => {
-      return new Friend(id, friendDataBase[id]);
+    getOneFriend: (root, { id }) => {
+      return new Promise((resolve, object) => {
+        Friends.findById(id, (err, friend) => {
+          if(err) reject(err);
+          else resolve(friend)
+        })
+      })
     },
+    getAliens: () => {
+      return Aliens.findAll();
+    }
   },
   Mutation: {
     createFriend: (root, { input }) => {
